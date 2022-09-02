@@ -1,7 +1,7 @@
 ## ARQUITETURA COMPUTE ##
 >AWS Oferece vários serviços de compute
 * EC2: IaaS, baseado em instâncias e máquinas virtuais;
-* Lambda: PaaS, executa funções, tem baixo custo;
+* Lambda: Serverless, executa funções, tem baixo custo;
 * ECS,EKS, Fargate, ECR: IaaS/PaaS, baseado em containers e instâncias;
 * Elastic Beanstalk: PaaS, para web apps (Infraestrutura a carfo do Elastic Beanstalk)
 
