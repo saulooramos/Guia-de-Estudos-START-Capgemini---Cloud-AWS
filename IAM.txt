@@ -1,0 +1,71 @@
+** AWS IAM **
+
+>Serviço gratuito de gerenciamento de acessos e recursos. Gerenciamento de usuários (o que, como e quem?)
+Exemplos de recursos: EC2, S3, RDS
+
+1. Usuários do IAM podem ser pessoas ou aplicações
+2. Grupos do IAM são coleções de usuários do IAM
+3. Políticas do IAM são documentos que definem recursos que podem ser acessados e nível de acesso
+4. Função do IAM (role) são permissões para solicitações de serviço. Exemplo: Permissões para EC2
+
+>Política (O que é liberado)
+Criação de política e associação (documento)
+2 Tipos: Política gerenciada e política inline
+As políticas gerenciadas são políticas genéricas da própria AWS (default) prontas para associação.
+Políticas inline são criadas e gerenciadas pelo usuário e aplicadas diretamente a um usuário.
+
+Version: 2012-10-17
+Statement
+Effect: Allow, Deny
+Action: (Tipo de acesso: no que?)DynamoDB: editTable, S3: getObject, SQS: sendMessage, IAM: changePassword
+Resource: (Onde? ARN)Tablename para DynamoDB, Bucketname para S3
+Condition: (desde que algo seja = tal) String/Numérico/Date. Ex: StringEquals, StringLike
+
+Exemplo:
+"Effect": "Allow"
+"Action": "S3:ListBucket"
+"Resource": "arn:aws:s3:::BUCKETAO"
+"Condition": {"StringLike":{"s3:prefix">[
+"",
+"home/",
+"home/${aws:username}/"
+}}
+
+*Negação tem precedência sobre permissão
+*Tudo o que não seja (NotResource)
+
+>Configuração de permissões
+Exemplo: Quem pode encerrar instâncias?
+Definir direitos de acesso refinados: Quem, qual e como
+
+>Características principais
+
+1. Controle de modo seguro o acesso individual e em grupo
+2. Integração com outros serviços da AWS
+3. Gerenciamento de identidade de federados
+4. Permissões granulares
+5. Suporte a MFA
+
+a) Um usuário pode pertencer a vários grupos
+b) Não é possível ter grupos dentro de grupos
+c) Usuários possuem permissçoes individuais e herdam permissões do grupo
+d) Prática de gerenciamento mais recomendada: Mover usuários pelos grupos apropriados
+
+>ARN e Coringas
+
+1. Amazon Resource name: identificação do recurso
+2. Sintaxe: arn:partition:service:region:account:resource
+3. Coringa: (*): acesso à todos os recursos. Exemplo: "S3:*"
+
+>Policy Generator
+
+Ajuda na criação de políticas. Tipos: SQS, Buckets S3, VPC endpoint, IAM, SNS
+
+>IAM roles
+
+1. Funciona como usuários, possui policies com permissões. Exemplo: role de administrador da conta, role de administrador S3.
+2. Sempre dar preferência a roles ao invés de credenciais. Exemplo: associar uma role com acesso ao S3 a uma instância do EC2.
+3. Permission policy: O que a role tem de permissão
+4. Trust policy: Quem pode assumir essa role
+
+
